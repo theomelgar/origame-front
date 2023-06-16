@@ -1,29 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-const FoldedCard = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  color: #fff;
-`;
+const FoldEffectCard = () => {
+  return (
+      <FoldedPart>
+        <Fold>
+        <img src="https://rabiscodahistoria.com/wp-content/uploads/2023/04/Dicas-A-Arte-do-Origami.webp" />
+        </Fold>
+      </FoldedPart>
+  );
+};
 
-const Fold = styled.div`
-  width: 4.13em;
-  height: 4.15em;
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: inline-block;
-  background: linear-gradient(-135deg, transparent 2.8em, #7bc2d2 0) no-repeat;
-  background-repeat: no-repeat;
-  box-shadow: 5px 5px 10px rgba(1, 1, 1, 10);
-  :hover {
-    transform: scale(1.04);
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
-  }
-`;
+export default FoldEffectCard;
 
 const FoldedPart = styled.div`
   width: 4.13em;
@@ -31,30 +19,37 @@ const FoldedPart = styled.div`
   width: 4.13em;
   height: 4.15em;
   position: absolute;
-  top: 0;
+  top:101px;
   right: 0;
-  img{
-    max-width: 100%;
-  }
-`
-
-const CardContent = styled.div`
-  padding: 20px;
+  z-index: 2;
 `;
 
-const FoldEffectCard = () => {
-  return (
-    <FoldedCard>
-      <FoldedPart>
-      <Fold/>
-      <img src="https://rabiscodahistoria.com/wp-content/uploads/2023/04/Dicas-A-Arte-do-Origami.webp"/>
-      </FoldedPart>
-      <CardContent>
-        <h2>Front Panel</h2>
-        <p>This is the front of the card.</p>
-      </CardContent>
-    </FoldedCard>
-  );
-};
-
-export default FoldEffectCard;
+const Fold = styled.div`
+  img {
+    margin: 15px -10px;
+    box-shadow: 5px 5px 5px rgba(1, 1, 1, 0.3);
+    transition: transform 0.6s ease-in-out;
+  }
+  :before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    box-shadow: 5px 5px 20px rgba(1, 1, 1, 10);
+    border-width: 0 100px 100px 0;
+    border-color:#ececec transparent;
+    transition: all ease 0.5s;
+  }
+  :hover:before,
+  :active:before {
+    cursor: pointer;
+    border-width: 0 150px 150px 0;
+    border-color: #ececec transparent;
+  }
+  
+  :hover img,
+  :active img {
+    transform: rotate(15deg);
+    cursor: pointer;
+  }
+`;
