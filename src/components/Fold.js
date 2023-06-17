@@ -5,7 +5,7 @@ const FoldEffectCard = () => {
   return (
       <FoldedPart>
         <Fold>
-        <img src="https://rabiscodahistoria.com/wp-content/uploads/2023/04/Dicas-A-Arte-do-Origami.webp" />
+        <img src="https://redesuldenoticias.com.br/content/uploads/2022/11/maxresdefault-1.jpg" />
         </Fold>
       </FoldedPart>
   );
@@ -14,25 +14,35 @@ const FoldEffectCard = () => {
 export default FoldEffectCard;
 
 const FoldedPart = styled.div`
-  width: 4.13em;
-  height: 4.15em;
-  width: 4.13em;
-  height: 4.15em;
+  background: linear-gradient(#fff,#fdff86);
+  width: 5em;
+  height: 5em;
   position: absolute;
   top:101px;
   right: 0;
   z-index: 2;
+  transition: all ease 0.5s;
+
+  :hover,
+  :active {
+    width: 7.4em;
+    height: 7.4em;
+    cursor: pointer;
+  }
 `;
 
 const Fold = styled.div`
+  position: relative;
   img {
-    margin: 15px -10px;
-    box-shadow: 5px 5px 5px rgba(1, 1, 1, 0.3);
-    transition: transform 0.6s ease-in-out;
+    position: absolute;
+    top:10px;
+    right: 13%;
+    box-shadow: 10px 10px 20px rgba(1, 1, 1, 0.5); /* Updated box-shadow values */    transition: transform 0.6s ease-in-out;
   }
   :before {
     content: "";
     position: absolute;
+    z-index: 1;
     top: 0;
     right: 0;
     box-shadow: 5px 5px 20px rgba(1, 1, 1, 10);
@@ -49,7 +59,7 @@ const Fold = styled.div`
   
   :hover img,
   :active img {
-    transform: rotate(15deg);
+    transform: rotate(10deg);
     cursor: pointer;
   }
 `;

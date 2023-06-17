@@ -1,12 +1,9 @@
-import LoginBox from "@/components/Login";
-import axios from "axios";
-import { useState } from "react";
+import SignInPage from "@/components/SIgnin";
 
 export default function Login() {
-
   return (
-    <LoginBox>
-      
-    </LoginBox>
+    <>
+      <SignInPage />
+    </>
   );
 }
