@@ -1,11 +1,38 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import { useState, useEffect } from "react";
+
 import Image from "next/image";
 import origameLogo from "../assets/origameLogo.svg";
 
+const pulseAnimation = keyframes`
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.1;
+  }
+`;
+
+
 const WelcomeSection = () => {
+  const [isPulsing, setIsPulsing] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsPulsing((prev) => !prev);
+    }, 1000); // Change the duration here to control the speed of the pulse
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <WelcomeContainer>
-      <BackgroundImage />
+      <BackgroundImage className={isPulsing ? "pulsating" : ""}  />
       <Content>
         <Title>Welcome to OrigaMe</Title>
         <Subtitle>Fold the universe</Subtitle>
@@ -30,6 +57,8 @@ const BackgroundImage = styled.div`
   height: 100%;
   object-fit: cover;
   opacity: 0.2;
+  transition: opacity 0.9s ease;  
+  animation: ${pulseAnimation} 12s infinite;
 `;
 
 const Content = styled.div`
@@ -40,8 +69,8 @@ const Content = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding: 0px;
-  color: #000;
+  gap: 30px;
+  color: #000000;
 `;
 
 const Title = styled.h1`
