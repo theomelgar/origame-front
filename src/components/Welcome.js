@@ -9,13 +9,12 @@ const pulseAnimation = keyframes`
     opacity: 0.1;
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.4;
   }
   100% {
     opacity: 0.1;
   }
 `;
-
 
 const WelcomeSection = () => {
   const [isPulsing, setIsPulsing] = useState(false);
@@ -32,7 +31,7 @@ const WelcomeSection = () => {
 
   return (
     <WelcomeContainer>
-      <BackgroundImage className={isPulsing ? "pulsating" : ""}  />
+      <BackgroundImage className={isPulsing ? "pulsating" : ""} />
       <Content>
         <Title>Welcome to OrigaMe</Title>
         <Subtitle>Fold the universe</Subtitle>
@@ -57,7 +56,7 @@ const BackgroundImage = styled.div`
   height: 100%;
   object-fit: cover;
   opacity: 0.2;
-  transition: opacity 0.9s ease;  
+  transition: opacity 0.9s ease;
   animation: ${pulseAnimation} 12s infinite;
 `;
 
