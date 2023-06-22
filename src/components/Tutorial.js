@@ -2,16 +2,44 @@ import React from "react";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 
-const TutorialPage = () => {
+const TutorialPage = ({ title, description, resultUrl, category, images }) => {
   const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
+  const renderImages = () => {
+    if (images && images.length > 0) {
+      return images.map((image) =>
+        isImageURL(image.url) ? (
+          <img src={image.url} key={image.id} alt="Tutorial Image" />
+        ) : (
+          <VideoContainer key={image.id}>
+            <Player>
+              <ReactPlayer
+                className="react-player"
+                controls={true}
+                url={image.url}
+                width="100%"
+              />
+            </Player>
+          </VideoContainer>
+        )
+      );
+    } else {
+      return <p>No images available.</p>;
+    }
+  };
+
+  const isImageURL = (url) => {
+    // Regular expression pattern to match image file extensions
+    const imageExtensions = /\.(jpg|jpeg|png|gif|bmp)$/i;
+
+    // Test if the URL matches the image file extension pattern
+    return imageExtensions.test(url);
+  };
+
   return (
     <TutorialContainer>
-      <Title>Tutorial Title</Title>
-      <Image
-        src="https://i.ytimg.com/vi/rP854rFvWrQ/maxresdefault.jpg"
-        alt="Tutorial Image"
-      />
-      <VideoContainer>
+      <Title>{title}</Title>
+      <Image src={resultUrl} alt="Tutorial Image" />
+      {/* <VideoContainer>
         <Player>
           <ReactPlayer
             className="react-player"
@@ -21,13 +49,10 @@ const TutorialPage = () => {
             height="100%"
           />
         </Player>
-      </VideoContainer>
-      <Classification>Classification: Beginner</Classification>
-      <Description>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac est in
-        risus vulputate lobortis. Aliquam maximus, mauris ut volutpat
-        ullamcorper, ante lorem aliquet dui, eu tristique eros erat vitae urna.
-      </Description>
+      </VideoContainer> */}
+      <Photos>Steps:{renderImages()}</Photos>
+      <Classification>Category : {category}</Classification>
+      <Description>Description : {description}</Description>
       <CommentsContainer>
         <Comment>Comment 1</Comment>
         <Comment>Comment 2</Comment>
@@ -36,42 +61,62 @@ const TutorialPage = () => {
     </TutorialContainer>
   );
 };
-
 const TutorialContainer = styled.div`
-  max-width: 800px;
+  border: 1px solid #000000;
+  background: #a3a3a3;
+  width: 800px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 0 auto;
   padding: 16px;
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 8px;
+  }
 `;
 
 const Title = styled.h1`
+  font-weight: 700;
+  width: 100%;
+  text-align: start;
   font-size: 24px;
   margin-bottom: 16px;
 `;
 
 const Image = styled.img`
-  max-width: clamp(0px, 800px, 100%);
+  max-width: 500px;
   margin: 0 auto;
   padding: 16px;
-
-  @media (max-width: 320px) {
+  width: 100%;
+  @media (max-width: 768px) {
     padding: 8px;
   }
 `;
 
-const VideoContainer = styled.div`
-  margin-bottom: 16px;
+const Photos = styled.div`
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
+const VideoContainer = styled.div`
+  width: 500px;
+  margin-bottom: 16px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
 
 const Player = styled.div`
+  width: 100%;
   position: relative;
-  padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
-  .react-player {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-`
+`;
+
 const Classification = styled.p`
   font-weight: bold;
   margin-bottom: 8px;
