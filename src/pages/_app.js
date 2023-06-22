@@ -17,17 +17,6 @@ export default function App({ Component, pageProps }) {
       }}
     >
       <Head>
-        {/* Font styles */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="true"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
         <title>OrigaMe</title>
       </Head>
       <Component {...pageProps} />

@@ -3,10 +3,12 @@ import styled from "styled-components";
 
 const FoldEffectCard = () => {
   return (
-      <FoldedPart>
+      <FoldedPart title="Sugestão de Origami">
+        <a href="/tutorial/2">
         <Fold>
         <img src="https://redesuldenoticias.com.br/content/uploads/2022/11/maxresdefault-1.jpg" />
         </Fold>
+        </a>
       </FoldedPart>
   );
 };

@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <Container>
       <Logo href="/">
-        <Image src={origameLogo} alt="Origame Logo" />{" "}
+        <Image style={{'background':'#ffffff'}}src={origameLogo} alt="Origame Logo" />{" "}
       </Logo>
       <NavLinks>
         <NavLink href="/">Home</NavLink>|<NavLink href="about  ">About</NavLink>
@@ -19,8 +19,11 @@ export default function Navbar() {
 }
 
 const Container = styled.nav` 
-  background-color: #ffe6ff;
+  max-height: 100px;
+  background-color: #363434;
   position: relative;
+  top: 0;
+  left: 0;
   color: #000;
   padding: 16px;
   display: flex;
@@ -46,7 +49,7 @@ const NavLinks = styled.div`
 
 const NavLink = styled.a`
   text-decoration: none;
-
+  color: #fcfcfc;
   &:hover {
     text-decoration: underline;
   }
