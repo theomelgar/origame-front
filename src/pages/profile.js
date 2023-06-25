@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import ProfilePage from "@/components/Profile";
 import { AuthContext } from "@/contexts/AuthContext";
+import ScrollToTopButton from "@/services/ScrollTop";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import styled from "styled-components";
@@ -20,6 +21,7 @@ export default function Profile() {
           <ProfilePage />
         </Box>
         <Footer />
+        <ScrollToTopButton />
       </Container>
     );
   } else {

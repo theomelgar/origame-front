@@ -51,6 +51,7 @@ export default function SignInPage() {
         expires,
       });
       setUserInfo(response.data.user);
+      toast("Welcome!");
       router.push("/");
     } catch (error) {
       console.log(error.response);
@@ -58,29 +59,29 @@ export default function SignInPage() {
     }
   };
 
-  const siginInGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const { idToken, accessToken } =
-        GoogleAuthProvider.credentialFromResult(result);
-      const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/sign-in/google`,
-        { idToken, accessToken }
-      );
-      const userData = data;
-      console.log(userData);
-      toast("Welcome!");
-      router.push("/");
-    } catch (error) {
-      toast("Tente novamente mais tarde!");
-    }
-  };
+  // const siginInGoogle = async () => {
+  //   try {
+  //     const result = await signInWithPopup(auth, provider);
+  //     const { idToken, accessToken } =
+  //       GoogleAuthProvider.credentialFromResult(result);
+  //     const { data } = await axios.post(
+  //       `${process.env.NEXT_PUBLIC_BACKEND_URL}/sign-in/google`,
+  //       { idToken, accessToken }
+  //     );
+  //     const userData = data;
+  //     console.log(userData);
+  //     toast("Welcome!");
+  //     router.push("/");
+  //   } catch (error) {
+  //     toast("Tente novamente mais tarde!");
+  //   }
+  // };
 
   return (
     <form className="form" onSubmit={handleSubmit} autoComplete="off">
       <div className="form-inner">
         <h2>User Login</h2>
-        <button className="btn btn--primary" onClick={siginInGoogle}>
+        <button className="btn btn--primary" onClick={()=>console.log('nao funciona')}>
           Login with Google
           <span className="icon">
             <FaGoogle style={{ width: "2.5em", height: "2.5em" }} />

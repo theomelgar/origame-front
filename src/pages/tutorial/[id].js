@@ -2,16 +2,18 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TutorialPage from "@/components/Tutorial";
 import WelcomeSection from "@/components/Welcome";
+import { AuthContext } from "@/contexts/AuthContext";
 import ScrollToTopButton from "@/services/ScrollTop";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
 export default function TutorialIdPage() {
   const router = useRouter();
   const { id } = router.query;
   const [tutorial, setTutorial] = useState([]);
+  const { userData, token } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchTutorials = async () => {
@@ -21,10 +23,10 @@ export default function TutorialIdPage() {
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/tutorial/${id}`
           );
           setTutorial(response.data);
-          console.log(response.data);
         }
       } catch (error) {
         console.log(error.response);
+        setTutorial(null)
       }
     };
 
@@ -38,6 +40,7 @@ export default function TutorialIdPage() {
         {tutorial ? (
           <TutorialPage
             key={tutorial.id}
+            userId={tutorial.userId}
             title={tutorial.title}
             description={tutorial.description}
             category={tutorial.category}
@@ -46,7 +49,7 @@ export default function TutorialIdPage() {
             createdAt={tutorial.createdAt}
           />
         ) : (
-          <>No content yet</>
+          <div className="h-screen">No content yet</div>
         )}
       </Box>
       <Footer />

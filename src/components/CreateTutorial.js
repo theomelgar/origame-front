@@ -12,7 +12,6 @@ export default function CreateTutorialPage() {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
-  const [post, setPost] = useState(false);
   const { userData, token } = useContext(AuthContext);
   const userId = userData.id;
   const router = useRouter();
@@ -56,37 +55,6 @@ export default function CreateTutorialPage() {
       console.error(error); // handle error
     }
   };
-  const handleUpdateTutorial = async (id) => {
-    const tutorialData = {
-      userId,
-      resultUrl,
-      title,
-      description,
-      category,
-      images,
-    };
-
-    try {
-      const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/tutorial/${id}`,
-        tutorialData
-      );
-      console.log(response.data); // handle success
-    } catch (error) {
-      console.error(error); // handle error
-    }
-  };
-
-  const handleDeleteTutorial = async (id) => {
-    try {
-      const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/tutorial/${id}`
-      );
-      console.log(response.data); // handle success
-    } catch (error) {
-      console.error(error); // handle error
-    }
-  };
 
   return (
     <Container t>
@@ -101,9 +69,9 @@ export default function CreateTutorialPage() {
       <h3>
         If you don't have your URL image, use imgur.com to post your image, and
         take the URL{" "}
-        <span onClick={() => window.open("https://imgur.com/", "_blank")}>
+        <button className="btn--primary" onClick={() => window.open("https://imgur.com/", "_blank")}>
           here
-        </span>
+        </button>
       </h3>
       <input
         type="text"
@@ -141,30 +109,43 @@ export default function CreateTutorialPage() {
           }
         }}
       ></textarea>
-      <button onClick={handleCreateTutorial}>Create</button>
+      <button className="btn btn--primary hover:opacity-80" onClick={handleCreateTutorial}>Create</button>
     </Container>
   );
 }
-
 const Container = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   width: 100%;
-  height: 400px;
+  min-height: 600px;
   gap: 10px;
   h3 {
     font-size: 20px;
-    opacity: 1;
-    span {
-      font-weight: 700;
+    button {
       background: var(--color-avaiable);
-      padding: 2px;
-      cursor: pointer;
+      padding: 7px;
     }
   }
   textarea {
     width: 100%;
   }
+
+  @media (max-width: 768px) {
+    /* Styles for screens up to 768px wide */
+    min-height: 400px;
+    h3 {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    /* Styles for screens up to 480px wide */
+    min-height: 300px;
+    h3 {
+      font-size: 16px;
+    }
+  }
 `;
+

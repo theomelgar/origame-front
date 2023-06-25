@@ -50,7 +50,7 @@ export default function SignUpPage() {
       setConfirmPassword("");
       setUsername("");
       setBirthday("");
-      router.push("/");
+      router.push("/sign-in");
     } catch (error) {
       console.error("Error registering user:", error);
       // Handle error and display appropriate error message to the user
