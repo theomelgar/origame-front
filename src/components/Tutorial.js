@@ -39,17 +39,6 @@ const TutorialPage = ({ title, description, resultUrl, category, images }) => {
     <TutorialContainer>
       <Title>{title}</Title>
       <Image src={resultUrl} alt="Tutorial Image" />
-      {/* <VideoContainer>
-        <Player>
-          <ReactPlayer
-            className="react-player"
-            controls='true'
-            url="https://www.youtube.com/watch?v=q0tLjyoC_7c"
-            width="100%"
-            height="100%"
-          />
-        </Player>
-      </VideoContainer> */}
       <Photos>Steps:{renderImages()}</Photos>
       <Classification>Category : {category}</Classification>
       <Description>Description : {description}</Description>
@@ -73,7 +62,7 @@ const TutorialContainer = styled.div`
   align-items: center;
   margin: 0 auto;
   padding: 16px;
-  gap: 20px;
+  gap: 30px;
   @media (max-width: 768px) {
     width: 100%;
     padding: 8px;
@@ -127,6 +116,8 @@ const Classification = styled.p`
 
 const Description = styled.p`
   margin-bottom: 16px;
+  text-align: center;
+  
 `;
 
 const CommentsContainer = styled.div`

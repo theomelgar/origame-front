@@ -13,18 +13,19 @@ export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  
-  const { setUauthToken, setUser, setUserInfo, userInfo } = useContext(AuthContext)
+
+  const { setUauthToken, setUser, setUserInfo, userInfo } =
+    useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-      if (!email || !password) {
-        // Handle validation error
-        alert("Please provide both email and password.");
-        return;
-      }
-      
+    if (!email || !password) {
+      // Handle validation error
+      alert("Please provide both email and password.");
+      return;
+    }
+
     try {
       const userCredentials = {
         email,
@@ -36,18 +37,24 @@ export default function SignInPage() {
         userCredentials
       );
 
-      
       console.log(response.data);
-      setCookie(undefined,'uauth_token',`${response.data.token}`)
+      const expires = new Date();
+      expires.setHours(expires.getHours() + 24);
+
+      setCookie(undefined, "uauth_token", response.data.token, {
+        expires,
+      });
       setUauthToken({
         uauth_token: response.data.token,
-      })
-      setCookie(undefined, 'userInfo', JSON.stringify(response.data.user));
+      });
+      setCookie(undefined, "userInfo", JSON.stringify(response.data.user), {
+        expires,
+      });
       setUserInfo(response.data.user);
       router.push("/");
     } catch (error) {
       console.log(error.response);
-      alert(error.response.data)
+      alert(error.response.data);
     }
   };
 

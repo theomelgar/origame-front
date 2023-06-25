@@ -1,7 +1,6 @@
 'use-client'
 
 import styled from "styled-components";
-import AuthComponent from "./AuthComponents";
 import { AuthContext } from "@/contexts/AuthContext";
 import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";

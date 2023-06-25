@@ -4,7 +4,6 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TutorialPage from "@/components/Tutorial";
 import WelcomeSection from "@/components/Welcome";
-import { AuthContext } from "@/contexts/AuthContext";
 import ScrollToTop from "@/services/ScrollTop";
 import axios from "axios";
 import { Inter } from "next/font/google";
@@ -15,7 +14,6 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [tutorials, setTutorials] = useState([]);
-  const [user, setUser] = useState();
   useEffect(() => {
     const fetchTutorials = async () => {
       try {
