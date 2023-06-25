@@ -5,23 +5,23 @@ import styled from "styled-components";
 import dynamic from "next/dynamic";
 import { AuthContext } from "@/contexts/AuthContext";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import ReactModal from 'react-modal';
+import { toast } from "react-toastify";
+import ReactModal from "react-modal";
 import { useRouter } from "next/router";
 
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
   },
 };
 
 export default function TutorialPage({
-  key,
+  id,
   title,
   description,
   resultUrl,
@@ -29,16 +29,21 @@ export default function TutorialPage({
   images,
   userId,
 }) {
-  
   const { userData, token } = useContext(AuthContext);
   const loggedInUserId = userData?.id;
-
+  let tutorialId = id
   const router = useRouter();
-  const { id } = router.query;
-  const tutorialId = id
-  console.log(tutorialId)
+
+  console.log(tutorialId);
+
+  const [newTitle, setNewTitle] = useState(title)
+  const [newDescription, setNewDescription] = useState(description)
+  const [newResultUrl, setNewResultUrl] = useState(resultUrl)
+  const [newCategory, setNewCategory] = useState(category)
+  const [newImages, setNewImages] = useState(images)
   
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
@@ -66,10 +71,8 @@ export default function TutorialPage({
   };
 
   const isImageURL = (url) => {
-    // Regular expression pattern to match image file extensions
     const imageExtensions = /\.(jpg|jpeg|png|gif|bmp)$/i;
 
-    // Test if the URL matches the image file extension pattern
     return imageExtensions.test(url);
   };
 
@@ -83,19 +86,23 @@ export default function TutorialPage({
     setIsModalOpen(false);
   };
 
-  const handleEdit = async (id) => {
-    id.preventDefault();
+  const handleIsEditing = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const handleEdit = async (e) => {
+    e.preventDefault();
+
     const tutorialData = {
-      userId,
-      resultUrl,
-      title,
-      description,
-      category,
-      images,
+      title: newTitle,
+      description: newDescription,
+      resultUrl: newResultUrl,
+      category: newCategory,
+      images: newImages,
     };
 
     try {
-      const response = await axios.put(
+      const response = await axios.patch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/tutorial/${id}`,
         tutorialData,
         {
@@ -104,14 +111,16 @@ export default function TutorialPage({
           },
         }
       );
-      console.log(response.data); // handle success
+      console.log(response.data);
+      setIsEditing(false);
+      router.reload();
     } catch (error) {
-      console.error(error); // handle error
+      console.error(error);
     }
   };
 
   const handleDelete = async (id) => {
-    console.log(loggedInUserId)
+    console.log(loggedInUserId);
     try {
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/tutorial/${id}`,
@@ -119,49 +128,134 @@ export default function TutorialPage({
           headers: {
             Authorization: `Bearer ${token?.uauth_token}`,
           },
-          data: { userId: loggedInUserId }, // Pass userId in the request body
+          data: { userId: loggedInUserId },
         }
       );
       toast("Tutorial deleted successfully!", { type: "success" });
-      console.log(response.data); // handle success
-      setIsModalOpen(false)
-      router.push('/')
+      console.log(response.data);
+      setIsModalOpen(false);
+      router.push("/");
     } catch (error) {
-      console.error(error); // handle error
+      console.error(error);
     }
   };
-
   return (
     <TutorialContainer>
-      <Title>{title}</Title>
-      <Image src={resultUrl} alt="Tutorial Image" />
-      <Photos>Steps: {renderImages()}</Photos>
-      <Classification>Category: {category}</Classification>
-      <Description>Description: {description}</Description>
-      {canEditOrDelete && (
-        <EditDeleteButtons className="btn-group">
-          <Button className="btn btn--primary" onClick={() => handleEdit(tutorialId)}>
+      {isEditing ? (
+        <Container t>
+          <h1>Create Tutorial</h1>
+          <input
+            type="text"
+            placeholder="URL of the image result"
+            required
+            value={newResultUrl}
+            onChange={(e) => setNewResultUrl(e.target.value)}
+          />
+          <h3>
+            If you don't have your URL image, use imgur.com to post your image,
+            and take the URL{" "}
+            <Button
+              className="btn btn--primary"
+              onClick={() => window.open("https://imgur.com/", "_blank")}
+            >
+              here
+            </Button>
+          </h3>
+          <input
+            type="text"
+            required
+            placeholder="Title"
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
+          />
+          <textarea
+            type="text"
+            placeholder="Description"
+            value={newDescription}
+            onChange={(e) => setNewDescription(e.target.value)}
+          ></textarea>
+          <input
+            type="text"
+            className="opacity-40 text-black font-bold"
+            disabled
+            placeholder="Category"
+            value={newCategory}
+            onChange={(e) => {
+              const value = e.target.value.replace(/\s/g, ""); // Remove spaces from the input value
+              setNewCategory(value);
+            }}
+          />
+          <textarea
+            className="opacity-40 text-black font-bold"
+            placeholder="URLs of the images steps, it can be a youtube video! (one per line)"
+            value={(newImages.map((i)=> i.url).join("\n"))}
+            disabled
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value) {
+                const urlList = value.split("\n").map((url) => url.trim());
+                setNewImages(urlList);
+              } else {
+                setNewImages([]);
+              }
+            }}
+          ></textarea>
+          <div className="btn-group">
+          <Button
+            className="btn btn--primary hover:opacity-80"
+            onClick={handleEdit}
+          >
             Edit
           </Button>
-          <Button
-            className="btn btn--primary"
-            onClick={openModal}
+          <Button  className="btn btn--primary hover:opacity-80"
+          onClick={handleIsEditing}>Cancel</Button>
+          </div>
+        </Container>
+        
+      ) : (
+        <>
+          <Title>{title}</Title>
+          <Image src={resultUrl} alt="Tutorial Image" />
+          <Photos>Steps: {renderImages()}</Photos>
+          <Classification>Category: {category}</Classification>
+          <Description>Description: {description}</Description>
+          {canEditOrDelete && (
+            <EditDeleteButtons className="btn-group">
+              <Button
+                className="btn btn--primary"
+                onClick={handleIsEditing}
+              >
+                Edit
+              </Button>
+              <Button className="btn btn--primary" onClick={openModal}>
+                Delete
+              </Button>
+            </EditDeleteButtons>
+          )}
+          <CommentsContainer>
+            <Comment>Comment 1</Comment>
+            <Comment>Comment 2</Comment>
+            <Comment>Comment 3</Comment>
+          </CommentsContainer>
+          <ReactModal
+            style={customStyles}
+            isOpen={isModalOpen}
+            onRequestClose={closeModal}
           >
-            Delete
-          </Button>
-        </EditDeleteButtons>
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to delete this tutorial?</p>
+            <Button
+              className="btn btn--primary"
+              onClick={() => handleDelete(tutorialId)}
+            >
+              Delete
+            </Button>
+            <Button className="btn btn--text" onClick={closeModal}>
+              Cancel
+            </Button>
+          </ReactModal>
+        </>
       )}
-      <CommentsContainer>
-        <Comment>Comment 1</Comment>
-        <Comment>Comment 2</Comment>
-        <Comment>Comment 3</Comment>
-      </CommentsContainer>
-      <ReactModal style={customStyles} isOpen={isModalOpen} onRequestClose={closeModal}>
-        <h2>Confirm Deletion</h2>
-        <p>Are you sure you want to delete this tutorial?</p>
-        <Button className="btn btn--primary" onClick={()=>handleDelete(tutorialId)}>Delete</Button>
-        <Button className="btn btn--text" onClick={closeModal}>Cancel</Button>
-      </ReactModal>
     </TutorialContainer>
   );
 }
@@ -250,4 +344,40 @@ const CommentsContainer = styled.div`
 
 const Comment = styled.div`
   margin-bottom: 8px;
+`;
+
+const Container = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 600px;
+  gap: 10px;
+  h3 {
+    font-size: 20px;
+    button {
+      background: var(--color-avaiable);
+      padding: 7px;
+    }
+  }
+  textarea {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    /* Styles for screens up to 768px wide */
+    min-height: 400px;
+    h3 {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    /* Styles for screens up to 480px wide */
+    min-height: 300px;
+    h3 {
+      font-size: 16px;
+    }
+  }
 `;

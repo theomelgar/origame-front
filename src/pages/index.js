@@ -39,6 +39,7 @@ export default function Home() {
             tutorials.map((elemento) => (
               <TutorialPage
                 key={elemento.id}
+                id={elemento.id}
                 userId={elemento.userId}
                 title={elemento.title}
                 description={elemento.description}

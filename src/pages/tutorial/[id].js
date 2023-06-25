@@ -1,8 +1,8 @@
+'use-client'
+
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TutorialPage from "@/components/Tutorial";
-import WelcomeSection from "@/components/Welcome";
-import { AuthContext } from "@/contexts/AuthContext";
 import ScrollToTopButton from "@/services/ScrollTop";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -13,7 +13,6 @@ export default function TutorialIdPage() {
   const router = useRouter();
   const { id } = router.query;
   const [tutorial, setTutorial] = useState([]);
-  const { userData, token } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchTutorials = async () => {
@@ -40,6 +39,7 @@ export default function TutorialIdPage() {
         {tutorial ? (
           <TutorialPage
             key={tutorial.id}
+            id={tutorial.id}
             userId={tutorial.userId}
             title={tutorial.title}
             description={tutorial.description}
