@@ -48,7 +48,6 @@ export default function CreateTutorialPage() {
           },
         }
       );
-      console.log(response);
       const tutorialId = response.data.id; 
       router.push(`/tutorial/${tutorialId}`);
     } catch (error) {

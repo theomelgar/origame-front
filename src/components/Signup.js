@@ -35,16 +35,13 @@ export default function SignUpPage() {
         picture,
         birthday: new Date(birthday),
       };
-      console.log(newUser)
-      // Make a POST request to the API endpoint
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/users`,
         newUser
       );
 
-      console.log("User registered successfully:", response.data);
+      toast("User registered successfully:", response.data);
 
-      // Reset the form after successful submission
       setEmail("");
       setPassword("");
       setConfirmPassword("");

@@ -31,13 +31,11 @@ export default function SignInPage() {
         email,
         password,
       };
-      console.log(userCredentials);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/sign-in`,
         userCredentials
       );
 
-      console.log(response.data);
       const expires = new Date();
       expires.setHours(expires.getHours() + 24);
 

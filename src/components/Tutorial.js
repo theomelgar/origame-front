@@ -34,7 +34,6 @@ export default function TutorialPage({
   let tutorialId = id
   const router = useRouter();
 
-  console.log(tutorialId);
 
   const [newTitle, setNewTitle] = useState(title)
   const [newDescription, setNewDescription] = useState(description)
@@ -111,7 +110,6 @@ export default function TutorialPage({
           },
         }
       );
-      console.log(response.data);
       setIsEditing(false);
       router.reload();
     } catch (error) {
@@ -120,7 +118,6 @@ export default function TutorialPage({
   };
 
   const handleDelete = async (id) => {
-    console.log(loggedInUserId);
     try {
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/tutorial/${id}`,
@@ -132,7 +129,6 @@ export default function TutorialPage({
         }
       );
       toast("Tutorial deleted successfully!", { type: "success" });
-      console.log(response.data);
       setIsModalOpen(false);
       router.push("/");
     } catch (error) {
