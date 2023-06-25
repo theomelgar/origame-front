@@ -14,6 +14,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [tutorials, setTutorials] = useState([]);
+  const [tutorialNumberId, setTutorialNumberId] = useState(1);
+  const [selectedTutorial, setSelectedTutorial] = useState(null);
+
   useEffect(() => {
     const fetchTutorials = async () => {
       try {
@@ -21,6 +24,7 @@ export default function Home() {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/tutorial`
         );
         setTutorials(response.data);
+        generateTheSuggestion(response.data);
       } catch (error) {
         console.log(error.response);
       }
@@ -28,6 +32,20 @@ export default function Home() {
 
     fetchTutorials();
   }, []);
+
+  const generateTheSuggestion = (res) => {
+    if (res.length > 0) {
+      const randomIndex = Math.floor(Math.random() * res.length);
+      setTutorialNumberId(randomIndex);
+    }
+  };
+
+  useEffect(() => {
+    if (tutorialNumberId && tutorials.length > 0) {
+      const selected = tutorials.find((tutorial) => tutorial.id === tutorials[tutorialNumberId].id);
+      setSelectedTutorial(selected);
+    }
+  }, [tutorialNumberId, tutorials]);
 
   return (
     <Container>

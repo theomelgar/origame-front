@@ -1,14 +1,52 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const FoldEffectCard = () => {
+  const [tutorials, setTutorials] = useState([]);
+  const [tutorialNumberId, setTutorialNumberId] = useState(1);
+  const [selectedTutorial, setSelectedTutorial] = useState(null);
+
+  useEffect(() => {
+    const fetchTutorials = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/tutorial`
+        );
+        setTutorials(response.data);
+        generateTheSuggestion(response.data);
+      } catch (error) {
+        console.log(error.response);
+      }
+    };
+
+    fetchTutorials();
+  }, []);
+
+  const generateTheSuggestion = (res) => {
+    if (res.length > 0) {
+      const randomIndex = Math.floor(Math.random() * res.length);
+      setTutorialNumberId(randomIndex);
+    }
+  };
+
+  useEffect(() => {
+    if (tutorialNumberId && tutorials.length > 0) {
+      const selected = tutorials.find(
+        (tutorial) => tutorial.id === tutorials[tutorialNumberId].id
+      );
+      setSelectedTutorial(selected);
+    }
+  }, [tutorialNumberId, tutorials]);
   return (
     <FoldedPart title="Sugestão de Origami">
-      <a href="/tutorial/2">
-        <Fold>
-          <img src="https://redesuldenoticias.com.br/content/uploads/2022/11/maxresdefault-1.jpg" />
-        </Fold>
-      </a>
+      {selectedTutorial && (
+        <a href={`/tutorial/${selectedTutorial.id}`}>
+          <Fold>
+            <img src="https://redesuldenoticias.com.br/content/uploads/2022/11/maxresdefault-1.jpg" />
+          </Fold>
+        </a>
+      )}
     </FoldedPart>
   );
 };

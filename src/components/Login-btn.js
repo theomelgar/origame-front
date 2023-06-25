@@ -1,26 +1,43 @@
 "use-client";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { AuthContext } from "@/contexts/AuthContext";
 import { destroyCookie } from "nookies";
 
+
 export default function SignInButton() {
   const [showOptions, setShowOptions] = useState(false);
+  const containerRef = useRef(null);
   const router = useRouter();
   const { userData, setUauthToken, setUserInfo } = useContext(AuthContext);
+
   const handleLogOut = () => {
     setUauthToken(null);
     setUserInfo(null);
     destroyCookie(undefined, "uauth_token");
     destroyCookie(undefined, "userInfo");
-    router.push('/')
+    router.push("/");
   };
+
+  const handleClickOutside = (event) => {
+    if (containerRef.current && !containerRef.current.contains(event.target)) {
+      setShowOptions(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       {userData ? (
-        <Container>
+        <Container ref={containerRef}>
           <img
             src={userData.picture}
             onClick={() => setShowOptions(!showOptions)}
@@ -38,6 +55,7 @@ export default function SignInButton() {
     </>
   );
 }
+
 
 const Container = styled.button`
   width: 100%;

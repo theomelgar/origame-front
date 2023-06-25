@@ -43,6 +43,9 @@ const WelcomeSection = () => {
 const WelcomeContainer = styled.div`
   position: relative;
   height: 500px;
+  @media (max-width: 400px) {
+    padding: 25px;
+  }
 `;
 
 const BackgroundImage = styled.div`
@@ -58,6 +61,7 @@ const BackgroundImage = styled.div`
   opacity: 0.2;
   transition: opacity 0.9s ease;
   animation: ${pulseAnimation} 12s infinite;
+  
 `;
 
 const Content = styled.div`
