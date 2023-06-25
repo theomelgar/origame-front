@@ -1,3 +1,4 @@
+'use-client'
 import { useRouter } from "next/router";
 import { useState } from "react";
 import styled from "styled-components";
@@ -8,7 +9,7 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [profilePic, setProfilePic] = useState("");
+  const [picture, setPicture] = useState("");
   const [birthday, setBirthday] = useState("");
 
   const router = useRouter();
@@ -25,19 +26,19 @@ export default function SignUpPage() {
       alert("Passwords do not match");
       return;
     }
-
+    
     try {
       const newUser = {
         email,
         password,
         username,
-        profilePic,
-        birthday,
+        picture,
+        birthday: new Date(birthday),
       };
-
+      console.log(newUser)
       // Make a POST request to the API endpoint
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/users`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/users`,
         newUser
       );
 
@@ -49,7 +50,7 @@ export default function SignUpPage() {
       setConfirmPassword("");
       setUsername("");
       setBirthday("");
-      router.push("/");
+      router.push("/sign-in");
     } catch (error) {
       console.error("Error registering user:", error);
       // Handle error and display appropriate error message to the user
@@ -107,8 +108,8 @@ export default function SignUpPage() {
           <Input
             class="input-group"
             type="text"
-            value={profilePic}
-            onChange={(e) => setProfilePic(e.target.value)}
+            value={picture}
+            onChange={(e) => setPicture(e.target.value)}
           />
         </InputWrapper>
         <InputWrapper class="input-wrapper">

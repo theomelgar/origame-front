@@ -1,36 +1,40 @@
+import { AuthProvider } from "@/contexts/AuthContext";
 import "@/styles/globals.css";
 import "@/styles/login.css";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App({ Component, pageProps }) {
   const { pathname } = useRouter();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
   return (
-    <div
-      style={{
-        cursor:
-          "url(https://cdn.custom-cursor.com/db/8890/32/origami-plane-and-boat-cursor.png) , default !important",
-      }}
-    >
-      <Head>
-        {/* Font styles */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="true"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-        <title>OrigaMe</title>
-      </Head>
-      <Component {...pageProps} />
-    </div>
+    <AuthProvider>
+      <div
+        style={{
+          cursor:
+            "url(https://cdn.custom-cursor.com/db/8890/32/origami-plane-and-boat-cursor.png) , default !important",
+        }}
+      >
+        <Head>
+          <title>OrigaMe</title>
+          <meta
+            name="description"
+            content="Origami community, with origami tutorials and a safe space to share your progress."
+          />
+          <meta
+            name="keywords"
+            content="origami tutorial, tsuru, paper fold, begginer origami"
+          />
+        </Head>
+        <Component {...pageProps} />
+        <ToastContainer />
+      </div>
+    </AuthProvider>
   );
 }

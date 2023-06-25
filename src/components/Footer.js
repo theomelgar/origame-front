@@ -9,10 +9,12 @@ const Footer = () => {
 };
 
 const FooterContainer = styled.footer`
-  background-color: #f2f2f2;
+  max-height: 100px;
+  background-color: #363434;
+  color: #ffffff;
   padding: 16px;
   text-align: center;
-  width: 100vw;
+  width: 100%;
 `;
 
 export default Footer;

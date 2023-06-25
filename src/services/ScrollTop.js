@@ -43,9 +43,8 @@ const ScrollButton = styled.button`
   justify-content: center;
   width: 50px;
   height: 50px;
-  background-color: #333;
+  background-color: #7e7e7e;
   border: none;
-  border-radius: 10px;
   color: #fff;
   font-size: 24px;
   cursor: pointer;
