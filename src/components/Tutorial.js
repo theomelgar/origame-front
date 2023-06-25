@@ -64,6 +64,7 @@ const TutorialPage = ({ title, description, resultUrl, category, images }) => {
 const TutorialContainer = styled.div`
   border: 1px solid #000000;
   background: #a3a3a3;
+  max-width: 1000px;
   width: 800px;
   height: 100%;
   display: flex;
@@ -72,6 +73,7 @@ const TutorialContainer = styled.div`
   align-items: center;
   margin: 0 auto;
   padding: 16px;
+  gap: 20px;
   @media (max-width: 768px) {
     width: 100%;
     padding: 8px;
@@ -102,6 +104,7 @@ const Photos = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: 20px;
 `;
 
 const VideoContainer = styled.div`

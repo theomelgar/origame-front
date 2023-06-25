@@ -1,15 +1,19 @@
+import { AuthProvider } from "@/contexts/AuthContext";
 import "@/styles/globals.css";
 import "@/styles/login.css";
+import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component,  pageProps }) {
   const { pathname } = useRouter();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+  
   return (
+    <AuthProvider>
     <div
       style={{
         cursor:
@@ -18,8 +22,11 @@ export default function App({ Component, pageProps }) {
     >
       <Head>
         <title>OrigaMe</title>
+        <meta name="description" content="Origami community, with origami tutorials and a safe space to share your progress."/>
+        <meta name="keywords" content="origami tutorial, tsuru, paper fold, begginer origami"/>
       </Head>
       <Component {...pageProps} />
     </div>
+     </AuthProvider>
   );
 }

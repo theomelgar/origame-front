@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import origameLogo from "../assets/origameLogo.svg";
 import FoldEffectCard from "./Fold";
+import SignInButton from "./Login-btn";
 
 export default function Navbar() {
   return (
@@ -11,7 +12,9 @@ export default function Navbar() {
       </Logo>
       <NavLinks>
         <NavLink href="/">Home</NavLink>|<NavLink href="about  ">About</NavLink>
-        |<NavLink href="sign-in">Login</NavLink>
+        |<NavLink>
+          <SignInButton/>
+        </NavLink>
       </NavLinks>
       <FoldEffectCard />
     </Container>
@@ -24,14 +27,17 @@ const Container = styled.nav`
   position: relative;
   top: 0;
   left: 0;
-  color: #000;
+  color: #000000;
   padding: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid #aaaaaa;
+  button{
+    
+  }
   img {
-    border: 1px solid #000;
+    border: 1px solid #000000;
     max-width: 67px;
   }
 `;
@@ -44,6 +50,7 @@ const Logo = styled.a`
 const NavLinks = styled.div`
   font-size: clamp(12px, 2vw, 24px);
   display: flex;
+  align-items: center;
   gap: 16px;
 `;
 
@@ -52,5 +59,9 @@ const NavLink = styled.a`
   color: #fcfcfc;
   &:hover {
     text-decoration: underline;
+  }
+  &:focus{
+    color: var(--color-selected);
+    transform: scale(1.2);
   }
 `;

@@ -16,18 +16,20 @@ export default function TutorialIdPage() {
   useEffect(() => {
     const fetchTutorials = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_REACT_APP_API_URL}/tutorial/${id}`
-        );
-        setTutorial(response.data);
-        console.log(response.data);
+        if (id) {
+          const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/tutorial/${id}`
+          );
+          setTutorial(response.data);
+          console.log(response.data);
+        }
       } catch (error) {
         console.log(error.response);
       }
     };
 
     fetchTutorials();
-  }, []);
+  }, [id]);
 
   return (
     <Container>

@@ -1,7 +1,10 @@
+"use-client";
+
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TutorialPage from "@/components/Tutorial";
 import WelcomeSection from "@/components/Welcome";
+import { AuthContext } from "@/contexts/AuthContext";
 import ScrollToTop from "@/services/ScrollTop";
 import axios from "axios";
 import { Inter } from "next/font/google";
@@ -12,24 +15,21 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [tutorials, setTutorials] = useState([]);
-
+  const [user, setUser] = useState();
   useEffect(() => {
     const fetchTutorials = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_REACT_APP_API_URL}/tutorial`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/tutorial`
         );
         setTutorials(response.data);
-        console.log(response.data);
-
       } catch (error) {
         console.log(error.response);
       }
     };
-    
+
     fetchTutorials();
   }, []);
-
 
   return (
     <Container>
@@ -61,7 +61,7 @@ export default function Home() {
 }
 
 const Container = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -71,7 +71,6 @@ const Container = styled.div`
 `;
 const Box = styled.div`
   display: flex;
-  flex: 1;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -82,6 +81,6 @@ const Tutorials = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  flex-direction: column  ;
+  flex-direction: column;
   gap: 40px;
 `;
