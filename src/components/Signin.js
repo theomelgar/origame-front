@@ -122,7 +122,7 @@ export default function SignInPage() {
             Sign in
           </button>
           <a className="btn--text" href="sign-up">
-            Don't have an account?
+            Do not have an account?
           </a>
         </div>
       </div>

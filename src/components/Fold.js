@@ -1,4 +1,5 @@
 import axios from "axios";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -41,11 +42,11 @@ const FoldEffectCard = () => {
   return (
     <FoldedPart title="Sugestão de Origami">
       {selectedTutorial && (
-        <a href={`/tutorial/${selectedTutorial.id}`}>
+        <Link href={`/tutorial/${selectedTutorial.id}`}>
           <Fold>
-            <img src="https://redesuldenoticias.com.br/content/uploads/2022/11/maxresdefault-1.jpg" />
+            <img src="https://redesuldenoticias.com.br/content/uploads/2022/11/maxresdefault-1.jpg" alt="Tutorial"/>
           </Fold>
-        </a>
+        </Link>
       )}
     </FoldedPart>
   );

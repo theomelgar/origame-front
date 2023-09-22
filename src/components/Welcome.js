@@ -2,7 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { useState, useEffect } from "react";
 
 import Image from "next/image";
-import origameLogo from "../assets/origameLogo.svg";
+import origameLogo from "../assets/origameLogo.png";
 
 const pulseAnimation = keyframes`
   0% {
@@ -60,7 +60,7 @@ const BackgroundImage = styled.div`
   object-fit: cover;
   opacity: 0.2;
   transition: opacity 0.9s ease;
-  animation: ${pulseAnimation} 12s infinite;
+  animation: ${pulseAnimation} 5s infinite;
   
 `;
 

@@ -6,8 +6,7 @@ import Navbar from "@/components/Navbar";
 import ProfilePage from "@/components/Profile";
 import { AuthContext } from "@/contexts/AuthContext";
 import ScrollToTopButton from "@/services/ScrollTop";
-import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 
 export default function Profile() {
@@ -25,10 +24,12 @@ export default function Profile() {
       </Container>
     );
   } else {
-    return (<AuthComponent>
-      <Navbar></Navbar>
+    return (
+      <>
+      <Navbar/>
       <Footer/>
-    </AuthComponent>);
+      </>
+    );
   }
 }
 

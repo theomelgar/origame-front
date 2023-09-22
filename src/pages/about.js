@@ -6,7 +6,7 @@ export default function Info() {
         <h1>Origame</h1>
         <h2>
             This website was created to be a community for everyone who enjoys
-            or doesn't enjoy making origami. Feel very welcome, and if you have
+            or does not enjoy making origami. Feel very welcome, and if you have
             any suggestions for improvements on the site, please send me an
             email: theomelgar@gmail.com.
           </h2>

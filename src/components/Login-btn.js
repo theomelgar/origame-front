@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { AuthContext } from "@/contexts/AuthContext";
 import { destroyCookie } from "nookies";
+import Link from "next/link";
 
 
 export default function SignInButton() {
@@ -44,8 +45,8 @@ export default function SignInButton() {
           />
           {showOptions && (
             <OptionsContainer>
-              <a href="/profile"> Profile </a>
-              <a onClick={handleLogOut}> Log out </a>
+              <Link href="/profile"> Profile </Link>
+              <Link onClick={handleLogOut}> Log out </Link>
             </OptionsContainer>
           )}
         </Container>

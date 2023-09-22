@@ -66,7 +66,7 @@ export default function CreateTutorialPage() {
         onChange={(e) => setResultUrl(e.target.value)}
       />
       <h3>
-        If you don't have your URL image, use imgur.com to post your image, and
+        If you do not have your URL image, use imgur.com to post your image, and
         take the URL{" "}
         <button className="btn--primary" onClick={() => window.open("https://imgur.com/", "_blank")}>
           here
