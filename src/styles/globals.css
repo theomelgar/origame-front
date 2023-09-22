@@ -33,7 +33,7 @@ button{
   --color-secondary: #363434;
   --color-selected: #5a5959;
   --color-details: #7e7e7e;
-  --color-avaiable: #a3a3a3;
+  --color-available: #a3a3a3;
   --base-border-radius: 0.25rem;
   --ease: cubic-bezier(0.075, 0.82, 0.165, 1);
   --duration: 750ms;

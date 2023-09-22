@@ -1,17 +1,18 @@
 "use-client";
 
-import AuthComponent from "@/components/AuthComponents";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import ProfilePage from "@/components/Profile";
 import { AuthContext } from "@/contexts/AuthContext";
 import ScrollToTopButton from "@/services/ScrollTop";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useContext } from "react";
 import styled from "styled-components";
 
 export default function Profile() {
   const { userData } = useContext(AuthContext);
-  
+  const router = useRouter()
   if (userData) {
     return (
       <Container>
@@ -24,12 +25,14 @@ export default function Profile() {
       </Container>
     );
   } else {
-    return (
-      <>
-      <Navbar/>
-      <Footer/>
-      </>
-    );
+    
+    return (<Container>
+    <Navbar />
+    <Box>
+    </Box>
+    <Footer />
+    <ScrollToTopButton />
+  </Container>)
   }
 }
 

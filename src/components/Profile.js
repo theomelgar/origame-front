@@ -19,15 +19,13 @@ export default function ProfilePage() {
   return (
     <Container>
       <UserInfo>
-        {userData.username ? (
-          <>
-          <h1>Username: {userData.username}</h1>
-          <h1>Email: {email}</h1>
-          </>
-        ) : (
-          <h1>Email: {email}</h1>
-        )}
         <img src={photo} alt="Profile Picture" />
+
+        {userData.username ? (
+          <h1>Username: {userData.username}</h1>
+        ) : (
+          <h1>Username: {email}</h1>
+        )}
       </UserInfo>
       <CreateTutorialPage />
     </Container>
@@ -58,13 +56,15 @@ const Container = styled.div`
 
 const UserInfo = styled.div`
   width: 100%;
-  height: 200px;
   display: flex;
-  justify-content: space-around;
+  gap: 10px;
+  margin-bottom: 30px;
+  justify-content: flex-start;
   align-items: center;
-  background-color: var(--color-avaiable);
   img {
     max-width: 100px;
+    max-height: 100px;
+    border: 1px solid #000;
   }
 
   @media (max-width: 768px) {

@@ -44,7 +44,7 @@ const FoldEffectCard = () => {
       {selectedTutorial && (
         <Link href={`/tutorial/${selectedTutorial.id}`}>
           <Fold>
-            <img src="https://redesuldenoticias.com.br/content/uploads/2022/11/maxresdefault-1.jpg" alt="Tutorial"/>
+            <img src={selectedTutorial.resultUrl} alt="Tutorial"/>
           </Fold>
         </Link>
       )}
@@ -81,7 +81,7 @@ const Fold = styled.div`
     box-shadow: 10px 10px 20px rgba(1, 1, 1, 0.5); /* Updated box-shadow values */
     transition: transform 0.6s ease-in-out;
   }
-  :before {
+  ::before {
     content: "";
     position: absolute;
     z-index: 1;

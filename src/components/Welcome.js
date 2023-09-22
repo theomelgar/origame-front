@@ -41,27 +41,29 @@ const WelcomeSection = () => {
 };
 
 const WelcomeContainer = styled.div`
+  width: 800px;
   position: relative;
   height: 500px;
-  @media (max-width: 400px) {
+  text-align: center;
+
+  @media (max-width: 800px) { 
+    width: 100%;
     padding: 25px;
   }
 `;
 
 const BackgroundImage = styled.div`
-  background-image: url("https://prints.ultracoloringpages.com/b3c74be583c18afa47fe564215ff07b6.png");
-  background-size: cover;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Origami_-_Crane.svg/1752px-Origami_-_Crane.svg.png");
+  background-size: contain ;
   background-position: center;
+  background-repeat: no-repeat;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.2;
-  transition: opacity 0.9s ease;
   animation: ${pulseAnimation} 5s infinite;
-  
 `;
 
 const Content = styled.div`
@@ -73,7 +75,8 @@ const Content = styled.div`
   align-items: center;
   height: 100%;
   gap: 30px;
-  color: #000000;
+  color: var(--color-primary);
+  text-decoration: dashed;
 `;
 
 const Title = styled.h1`
@@ -83,7 +86,7 @@ const Title = styled.h1`
 `;
 
 const Subtitle = styled.h2`
-  font-size: 24px;
+  font-size: 30px;
   font-weight: bold;
 `;
 

@@ -45,8 +45,8 @@ export default function SignInButton() {
           />
           {showOptions && (
             <OptionsContainer>
-              <Link href="/profile"> Profile </Link>
-              <Link onClick={handleLogOut}> Log out </Link>
+              <a href="/profile"> Profile </a>
+              <a onClick={handleLogOut}> Log out </a>
             </OptionsContainer>
           )}
         </Container>

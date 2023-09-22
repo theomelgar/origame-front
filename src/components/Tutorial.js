@@ -8,6 +8,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import ReactModal from "react-modal";
 import { useRouter } from "next/router";
+import getTimeAgo from "@/services/timeAgo";
 
 const customStyles = {
   content: {
@@ -28,19 +29,19 @@ export default function TutorialPage({
   category,
   images,
   userId,
+  createdAt,
 }) {
   const { userData, token } = useContext(AuthContext);
   const loggedInUserId = userData?.id;
-  let tutorialId = id
+  let tutorialId = id;
   const router = useRouter();
 
+  const [newTitle, setNewTitle] = useState(title);
+  const [newDescription, setNewDescription] = useState(description);
+  const [newResultUrl, setNewResultUrl] = useState(resultUrl);
+  const [newCategory, setNewCategory] = useState(category);
+  const [newImages, setNewImages] = useState(images);
 
-  const [newTitle, setNewTitle] = useState(title)
-  const [newDescription, setNewDescription] = useState(description)
-  const [newResultUrl, setNewResultUrl] = useState(resultUrl)
-  const [newCategory, setNewCategory] = useState(category)
-  const [newImages, setNewImages] = useState(images)
-  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -135,10 +136,20 @@ export default function TutorialPage({
       console.error(error);
     }
   };
+
+  const date = new Date(createdAt);
+  const formattedDate = date.toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  const timeAgo = getTimeAgo(date);
   return (
     <TutorialContainer>
       {isEditing ? (
-        <Container t>
+        <Container>
           <h1>Create Tutorial</h1>
           <input
             type="text"
@@ -184,7 +195,7 @@ export default function TutorialPage({
           <textarea
             className="opacity-40 text-black font-bold"
             placeholder="URLs of the images steps, it can be a youtube video! (one per line)"
-            value={(newImages.map((i)=> i.url).join("\n"))}
+            value={newImages.map((i) => i.url).join("\n")}
             disabled
             onChange={(e) => {
               const value = e.target.value;
@@ -197,30 +208,38 @@ export default function TutorialPage({
             }}
           ></textarea>
           <div className="btn-group">
-          <Button
-            className="btn btn--primary hover:opacity-80"
-            onClick={handleEdit}
-          >
-            Edit
-          </Button>
-          <Button  className="btn btn--primary hover:opacity-80"
-          onClick={handleIsEditing}>Cancel</Button>
+            <Button
+              className="btn btn--primary hover:opacity-80"
+              onClick={handleEdit}
+            >
+              Edit
+            </Button>
+            <Button
+              className="btn btn--primary hover:opacity-80"
+              onClick={handleIsEditing}
+            >
+              Cancel
+            </Button>
           </div>
         </Container>
-        
       ) : (
         <>
-          <Title>{title}</Title>
+          <Info>
+            <Title>{title}</Title>
+            <Created>
+              <br />
+              {timeAgo}
+              <br />
+              This was publicated in {formattedDate}
+            </Created>
+            <Classification>Category : {category}</Classification>
+          </Info>
           <Image src={resultUrl} alt="Tutorial Image" />
-          <Photos>Steps: {renderImages()}</Photos>
-          <Classification>Category: {category}</Classification>
-          <Description>Description: {description}</Description>
+          <Description>Description : {description}</Description>
+          <Photos>Step by step : {renderImages()}</Photos>
           {canEditOrDelete && (
             <EditDeleteButtons className="btn-group">
-              <Button
-                className="btn btn--primary"
-                onClick={handleIsEditing}
-              >
+              <Button className="btn btn--primary" onClick={handleIsEditing}>
                 Edit
               </Button>
               <Button className="btn btn--primary" onClick={openModal}>
@@ -255,11 +274,8 @@ export default function TutorialPage({
     </TutorialContainer>
   );
 }
-
 const TutorialContainer = styled.div`
-  border: 1px solid #000000;
-  background: #a3a3a3;
-  max-width: 1000px;
+  background: var(--color-primary);
   width: 800px;
   height: 100%;
   display: flex;
@@ -269,43 +285,76 @@ const TutorialContainer = styled.div`
   margin: 0 auto;
   padding: 16px;
   gap: 30px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); 
+
   @media (max-width: 768px) {
     width: 100%;
     padding: 15px;
     margin-top: 60px;
   }
-`;
 
+  position: relative;
+  overflow: hidden;
+  ::before {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    width: 100%;
+    height: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    filter: blur(100px);
+  }
+`;
+const Info = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding-top: 2%;
+  padding-left: 2%;
+`
 const Title = styled.h1`
   font-weight: 700;
   width: 100%;
-  text-align: start;
   font-size: 24px;
-  margin-bottom: 16px;
 `;
 
-const Image = styled.img`
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 16px;
+const Created = styled.h2`
   width: 100%;
-  @media (max-width: 768px) {
-    padding: 8px;
-  }
+  font-size: 15px;
+  font-weight: 300;
+  text-align: right;
+`;
+
+const Classification = styled.p`
+  width: 100%;
+  font-weight: bold;
+`;
+
+
+const Image = styled.img`
+  width: 100%;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); 
+
 `;
 
 const Photos = styled.div`
-  max-width: 500px;
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
   gap: 20px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); 
+  padding:  10px;
 `;
 
 const VideoContainer = styled.div`
-  width: 500px;
+  width: 100%;
   margin-bottom: 16px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); 
+
   @media (max-width: 768px) {
     width: 100%;
   }
@@ -316,14 +365,10 @@ const Player = styled.div`
   position: relative;
 `;
 
-const Classification = styled.p`
-  font-weight: bold;
-  margin-bottom: 8px;
-`;
-
 const Description = styled.p`
+  text-align: start;
+  width: 100%;
   margin-bottom: 16px;
-  text-align: center;
 `;
 
 const EditDeleteButtons = styled.div``;
@@ -335,10 +380,21 @@ const Button = styled.button`
 `;
 
 const CommentsContainer = styled.div`
+  width: 100%;
+  border: 1px solid var(--color-secondary);
   margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); 
+
+  align-items: flex-start;
 `;
 
 const Comment = styled.div`
+  text-align: start;
+  width: 100%;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); 
+
   margin-bottom: 8px;
 `;
 
@@ -353,7 +409,7 @@ const Container = styled.form`
   h3 {
     font-size: 20px;
     button {
-      background: var(--color-avaiable);
+      background: var(--color-available);
       padding: 7px;
     }
   }

@@ -16,6 +16,7 @@ export default function Home() {
   const [tutorials, setTutorials] = useState([]);
   const [tutorialNumberId, setTutorialNumberId] = useState(1);
   const [selectedTutorial, setSelectedTutorial] = useState(null);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const fetchTutorials = async () => {
@@ -42,32 +43,48 @@ export default function Home() {
 
   useEffect(() => {
     if (tutorialNumberId && tutorials.length > 0) {
-      const selected = tutorials.find((tutorial) => tutorial.id === tutorials[tutorialNumberId].id);
+      const selected = tutorials.find(
+        (tutorial) => tutorial.id === tutorials[tutorialNumberId].id
+      );
       setSelectedTutorial(selected);
     }
-  }, [tutorialNumberId, tutorials]);
+  }, [tutorialNumberId, tutorials, search]);
 
   return (
     <Container>
-      <Navbar />
+      <Navbar search={search} setSearch={setSearch} />
       <Box>
         <WelcomeSection />
         <Tutorials>
-          {tutorials ? (
-            tutorials.map((elemento) => (
-              <TutorialPage
-                key={elemento.id}
-                id={elemento.id}
-                userId={elemento.userId}
-                title={elemento.title}
-                description={elemento.description}
-                category={elemento.category}
-                images={elemento.images}
-                resultUrl={elemento.resultUrl}
-                createdAt={elemento.createdAt}
-              />
-            ))
-          ) : (
+          {search.length > 0 ? (
+            search.slice(0, 10).map((element) => (
+                <TutorialPage
+                  key={element.id}
+                  id={element.id}
+                  userId={element.userId}
+                  title={element.title}
+                  description={element.description}
+                  category={element.category}
+                  images={element.images}
+                  resultUrl={element.resultUrl}
+                  createdAt={element.createdAt}
+                  />
+              ))
+          ) : tutorials && search.length === 0 ? (
+            tutorials.slice(0, 10).map((element) => (
+                <TutorialPage
+                  key={element.id}
+                  id={element.id}
+                  userId={element.userId}
+                  title={element.title}
+                  description={element.description}
+                  category={element.category}
+                  images={element.images}
+                  resultUrl={element.resultUrl}
+                  createdAt={element.createdAt}
+                />
+              ))
+          ) : tutorials.length===0(
             <>No content yet</>
           )}
         </Tutorials>
@@ -84,7 +101,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  background: #fcfcfc;
+  background: var(--color-available);
   position: relative;
 `;
 const Box = styled.div`
@@ -100,5 +117,5 @@ const Tutorials = styled.div`
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  gap: 40px;
+  gap: 5em;
 `;

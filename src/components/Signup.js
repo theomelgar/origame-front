@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");

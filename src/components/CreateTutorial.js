@@ -56,7 +56,7 @@ export default function CreateTutorialPage() {
   };
 
   return (
-    <Container t>
+    <Container>
       <h1>Create Tutorial</h1>
       <input
         type="text"
@@ -119,11 +119,11 @@ const Container = styled.form`
   align-items: flex-start;
   width: 100%;
   min-height: 600px;
-  gap: 10px;
+  gap: 30px;
   h3 {
     font-size: 20px;
     button {
-      background: var(--color-avaiable);
+      background: var(--color-available);
       padding: 7px;
     }
   }
