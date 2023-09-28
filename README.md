@@ -12,8 +12,9 @@ yarn dev
 pnpm dev
 ```
 <p align="center">
-<img align="center" src="https://im5.ezgif.com/tmp/ezgif-5-fecc684db4.gif">
+<img align="center" src="https://github.com/theomelgar/origame-front/assets/93146829/984d5328-1c00-4092-a154-0fc3e7bc639e">
 </p>
+
 <br/>
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
